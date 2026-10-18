@@ -152,7 +152,7 @@ export default function MenuApp({ mesa }: { mesa: number | null }) {
                   {count} ítem{count !== 1 ? "s" : ""} en tu carrito
                 </span>
                 <span className="flex items-center text-[16.5px] font-black">
-                  S/ {total.toFixed(2)}
+                  Bs. {total.toFixed(2)}
                   <ArrowLeft size={15} className="ml-2 rotate-180" />
                 </span>
               </button>
@@ -174,14 +174,14 @@ export default function MenuApp({ mesa }: { mesa: number | null }) {
         <Thumb p={l.prod} kind={l.kind} tiny />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-[14.5px] font-bold text-[#221a14]">{l.prod.name}</p>
-                      <p className="text-[12.5px] text-[#221a14]/55">S/ {l.prod.price.toFixed(2)} c/u</p>
+                      <p className="text-[12.5px] text-[#221a14]/55">Bs. {l.prod.price.toFixed(2)} c/u</p>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <StepBtn minimize onClick={() => setQty(l.prod, l.kind, l.qty - 1)}><Minus size={13} /></StepBtn>
                       <span className="w-6 text-center text-[14.5px] font-black">{l.qty}</span>
                       <StepBtn onClick={() => setQty(l.prod, l.kind, l.qty + 1)}><Plus size={13} /></StepBtn>
                     </div>
-                    <span className="w-20 text-right text-[14.5px] font-black text-[#47141c]">S/ {(l.prod.price * l.qty).toFixed(2)}</span>
+                    <span className="w-20 text-right text-[14.5px] font-black text-[#47141c]">Bs. {(l.prod.price * l.qty).toFixed(2)}</span>
                   </li>
                 ))}
               </ul>
@@ -200,7 +200,7 @@ export default function MenuApp({ mesa }: { mesa: number | null }) {
                 <input className="campo mt-3" placeholder="Indicaciones para cocina (opcional): sin ají, tallar al dente..." value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={300} />
                 <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#122e26] px-4 py-3 text-white">
                   <span className="text-[13.5px] font-semibold text-white/80">Total del pedido</span>
-                  <span className="font-display text-2xl font-black text-[#e7a93c]">S/ {total.toFixed(2)}</span>
+                  <span className="font-display text-2xl font-black text-[#e7a93c]">Bs. {total.toFixed(2)}</span>
                 </div>
                 {err && <p className="mt-3 rounded-xl bg-[#7c2430]/10 px-4 py-3 text-[13px] font-semibold text-[#7c2430]">{err}</p>}
                 <button onClick={sendToCashier} disabled={busy || alias.trim().length < 2 || !/^\d{6,15}$/.test(phone)} className="btn btn-bosque mt-4 w-full py-3.5 text-[15px]">
@@ -274,7 +274,7 @@ function SuccessScreen({ order, onBack }: { order: ConfirmOrder; onBack: () => v
 
           <div className="mt-5 flex items-center justify-between rounded-2xl bg-[#f7f1e6] px-4 py-3">
             <span className="text-[13px] font-semibold text-[#221a14]/60">Total a pagar</span>
-            <span className="font-display text-2xl font-black text-[#47141c]">S/ {Number(order.total).toFixed(2)}</span>
+            <span className="font-display text-2xl font-black text-[#47141c]">Bs. {Number(order.total).toFixed(2)}</span>
           </div>
           <div className="mt-4 flex gap-2.5">
             <button onClick={onBack} className="btn btn-fantasma flex-1 py-2.5 text-[13.5px]">Seguir mirando la carta</button>
@@ -299,7 +299,7 @@ function ProductCard({ p, qty, setQty, kind }: { p: Prod; qty: number; setQty: (
         <h3 className="text-[15px] font-bold leading-tight text-[#221a14]">{p.name}</h3>
         <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-[#221a14]/55">{p.description}</p>
         <div className="mt-auto flex items-center justify-between pt-2.5">
-          <span className="font-display text-lg font-black text-[#47141c] drop-shadow-none">S/ {p.price.toFixed(2)}</span>
+          <span className="font-display text-lg font-black text-[#47141c] drop-shadow-none">Bs. {p.price.toFixed(2)}</span>
           {agotado ? (
             <span className="etiq bg-[#7c2430]/10 text-[#7c2430]">Agotado</span>
           ) : qty > 0 ? (

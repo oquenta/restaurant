@@ -192,7 +192,7 @@ export async function pay(
   if (method === "efectivo") {
     received = Math.round(Number(input.amount_received ?? 0) * 100) / 100;
     if (!Number.isFinite(received) || received < total)
-      return { error: `El monto recibido debe cubrir el total (S/ ${total.toFixed(2)}).` };
+      return { error: `El monto recibido debe cubrir el total (Bs. ${total.toFixed(2)}).` };
     change = Math.round((received - total) * 100) / 100;
   }
 
@@ -209,7 +209,7 @@ export async function pay(
     }
   }
   await q("INSERT INTO modifications(order_id,type,reason,summary,by_user) VALUES($1,'pagado',$2,$3,$4)",
-    [id, `Cobrado (${method} · ${input.order_type})`, `Total S/ ${total.toFixed(2)}${change ? ` · Cambio S/ ${change.toFixed(2)}` : ""}`, byName]);
+    [id, `Cobrado (${method} · ${input.order_type})`, `Total Bs. ${total.toFixed(2)}${change ? ` · Cambio Bs. ${change.toFixed(2)}` : ""}`, byName]);
 
   return { order: mapOrder(upd[0], full.its), received, change };
 }
@@ -270,6 +270,6 @@ export async function removeOrder(id: number, reason: string, byName: string): P
   if (!reason || reason.trim().length < 3) return { error: "Debes justificar la eliminación (mínimo 3 caracteres)." };
   const upd = (await q("UPDATE orders SET status='eliminado' WHERE id=$1 RETURNING *", [id])) as Array<Record<string, unknown>>;
   await q("INSERT INTO modifications(order_id,type,reason,summary,by_user) VALUES($1,'eliminado',$2,$3,$4)",
-    [id, reason, `Eliminado por caja. Suma: S/ ${toNum(full.r.total).toFixed(2)}`, byName]);
+    [id, reason, `Eliminado por caja. Suma: Bs. ${toNum(full.r.total).toFixed(2)}`, byName]);
   return { order: mapOrder(upd[0], full.its) };
 }

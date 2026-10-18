@@ -7,7 +7,7 @@ export function minutesTill(target: string | Date): number {
 }
 
 export function money(v: unknown): string {
-  const cookie = "S/ ";
+  const cookie = "Bs. ";
   const n = Number(v || 0);
   return (
     cookie +

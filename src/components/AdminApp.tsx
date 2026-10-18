@@ -116,9 +116,9 @@ function Dashboard() {
     <main className="p-4 md:p-6">
       <h1 className="font-display text-3xl font-black">Hoy en la caja</h1>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <Card k="Ventas de hoy" v={`S/ ${d.ventas_hoy.total.toFixed(2)}`} s={`${d.ventas_hoy.n} pedidos pagados`} accent />
+        <Card k="Ventas de hoy" v={`Bs. ${d.ventas_hoy.total.toFixed(2)}`} s={`${d.ventas_hoy.n} pedidos pagados`} accent />
         <Card k="Pendientes en caja" v={String(d.pendientes)} s="esperando cobro" />
-        <Card k="Efectivo vs QR" v={d.metodos.map((m) => `${m.method === "efectivo" ? "Efe" : "QR"} S/ ${m.total.toFixed(0)}`).join(" · ") || "—"} s="del día" />
+        <Card k="Efectivo vs QR" v={d.metodos.map((m) => `${m.method === "efectivo" ? "Efe" : "QR"} Bs. ${m.total.toFixed(0)}`).join(" · ") || "—"} s="del día" />
         <Card k="Sin casi stock" v={String(d.low_stock.length)} s="productos por agotarse" warn />
       </div>
 
@@ -173,7 +173,7 @@ function Dashboard() {
                 <p className="flex items-center gap-2 font-bold">
                   <Ban size={13} className="text-[#e59f9f]" /> #{o.code} · {o.alias}
                   <span className="etiq bg-white/10 text-white/60">{o.status}</span>
-                  <span className="ml-auto font-bold text-[#e7a93c]">S/ {o.total.toFixed(2)}</span>
+                  <span className="ml-auto font-bold text-[#e7a93c]">Bs. {o.total.toFixed(2)}</span>
                 </p>
                 {o.reason && <p className="text-white/55">“{o.reason}” — {o.by}</p>}
               </li>
@@ -282,7 +282,7 @@ function Productos() {
               <p className="text-[12px] text-white/45">{p.category_name} · act. {new Date(p.updated_at).toLocaleDateString("es-PE")}</p>
             </div>
             <div className="text-right">
-              <p className="font-display text-lg font-black text-[#e7a93c]">S/ {p.price.toFixed(2)}</p>
+              <p className="font-display text-lg font-black text-[#e7a93c]">Bs. {p.price.toFixed(2)}</p>
               <p className={`text-[12px] font-bold ${p.stock <= p.low_stock_threshold ? "text-[#e59f9f]" : "text-white/55"}`}>{p.stock} u. en stock</p>
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -370,7 +370,7 @@ function ProdModal({ value, cats, busy, onClose, onSubmit }: {
               <option value="" disabled>Categoría…</option>
               {cats.map((c) => <option key={c.id} value={String(c.id)}>{c.name}</option>)}
             </select>
-            <input name="price" type="number" step="0.1" min="0.5" defaultValue={value.price ?? ""} className="campo" placeholder="Precio (S/)" required />
+            <input name="price" type="number" step="0.1" min="0.5" defaultValue={value.price ?? ""} className="campo" placeholder="Precio (Bs.)" required />
           </div>
         </div>
         <textarea name="description" defaultValue={value.description || ""} className="campo mt-2.5 min-h-16" placeholder="Breve descripción para el menú…" />
@@ -650,7 +650,7 @@ function PedidosAdmin() {
               <p className="text-[11.5px] text-white/45">{new Date(o.created_at).toLocaleString("es-PE")} · {o.n_items} unidades</p>
             </div>
             <span className="etiq bg-white/10 text-white/70">{o.status}</span>
-            <p className="font-black">S/ {o.total.toFixed(2)}</p>
+            <p className="font-black">Bs. {o.total.toFixed(2)}</p>
             {o.status === "pagado" && (
               <button onClick={() => setTarget(o)} className="flex items-center gap-1.5 rounded-full border border-[#7c2430]/40 bg-[#7c2430]/20 px-3.5 py-2 text-[12px] font-bold text-[#e59f9f] hover:bg-[#7c2430]/35">
                 <Ban size={13} /> Anular

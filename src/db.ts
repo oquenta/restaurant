@@ -35,14 +35,14 @@ async function init(): Promise<void> {
       // tolerante: pg-mem puede no soportar sentencias secundarias (p. ej. CREATE INDEX)
     }
   }
-  const r = await pool.query("SELECT COUNT(*)::int AS n FROM users");
-  const n = (r.rows[0] as any).n as number;
-  if (n === 0) await seed(pool);
-}
-
-function seed(p: Pool) {
-  return __seed(p);
-}
+  try {
+    const r = await pool.query("SELECT COUNT(*)::int AS n FROM users");
+    const n = (r.rows[0] as any).n as number;
+    if (n === 0) await seed(pool);
+  } catch {
+    // tolerante: si falla la cuenta de usuarios (p. ej. tabla no existe), asumimos que necesitamos semilla
+    await seed(pool);
+  }
 
 async function __seed(p: Pool) {
   const cats: Array<[string, string, number]> = [

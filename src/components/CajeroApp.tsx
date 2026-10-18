@@ -248,7 +248,7 @@ function RowCard({ o, actions }: { o: Order; actions: RowActions }) {
           <p>{o.items.reduce((a, i) => a + i.qty, 0)} unidades</p>
         </div>
         <div className="text-right">
-          <p className="font-display text-xl font-black">S/ {o.total.toFixed(2)}</p>
+          <p className="font-display text-xl font-black">Bs. {o.total.toFixed(2)}</p>
         </div>
         <span className={`etiq ${meta?.tint ?? "bg-white/10 text-white/60"} min-w-fit`}>{meta?.label ?? o.status}</span>
         <Countdown o={o} />
@@ -261,7 +261,7 @@ function RowCard({ o, actions }: { o: Order; actions: RowActions }) {
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <button onClick={() => actions.editar(o)} disabled={o.status !== "pendiente"} className="btn btn-oscuro-fantasma gap-1.5 px-3.5 py-2 text-[12.5px]"><Pencil size={14} /> Modificar</button>
         <button onClick={() => actions.eliminar(o)} disabled={o.status !== "pendiente"} className="btn btn-oscuro-fantasma gap-1.5 px-3.5 py-2 text-[12.5px] text-[#e59f9f] hover:bg-[#7c2430]/25"><Trash2 size={14} /> Eliminar</button>
-        <button onClick={() => actions.cobrar(o)} disabled={o.status !== "pendiente"} className="btn btn-mostaza gap-1.5 px-4 py-2 text-[12.5px] disabled:bg-white/10 disabled:text-white/40"><Banknote size={14} /> Cobrar S/ {o.total.toFixed(2)}</button>
+        <button onClick={() => actions.cobrar(o)} disabled={o.status !== "pendiente"} className="btn btn-mostaza gap-1.5 px-4 py-2 text-[12.5px] disabled:bg-white/10 disabled:text-white/40"><Banknote size={14} /> Cobrar Bs. {o.total.toFixed(2)}</button>
       </div>
     </article>
   );
@@ -349,7 +349,7 @@ function DetalleModal({ o, onClose, mods, onRefresh: _r }: { o: Order; onClose: 
       <div className="grid gap-4 px-6 py-5">
         <div className="grid grid-cols-2 gap-3">
           <Info k="Estado" v={o.status} />
-          <Info k="Total" v={`S/ ${o.total.toFixed(2)}`} />
+          <Info k="Total" v={`Bs. ${o.total.toFixed(2)}`} />
           <Info k="Cobrado a las" v={o.paid_at ? fmtHora(o.paid_at) : "—"} />
           <Info k="Cajero" v={o.paid_by || "—"} />
           <Info k="Método" v={o.payment_method || "—"} />
@@ -367,7 +367,7 @@ function DetalleModal({ o, onClose, mods, onRefresh: _r }: { o: Order; onClose: 
                 <td className="py-1.5 font-black">{i.qty}×</td>
                 <td className="py-1.5 font-semibold">{i.name}</td>
                 <td className="py-1.5 text-[#221a14]/55">{i.kind}</td>
-                <td className="py-1.5 text-right font-bold">S/ {(i.unit_price * i.qty).toFixed(2)}</td>
+                <td className="py-1.5 text-right font-bold">Bs. {(i.unit_price * i.qty).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
@@ -504,13 +504,13 @@ function ModificarModal({ o, menu, onClose, onDone }: { o: Order; menu: MenuCat[
             <li key={e.product_id} className="flex items-center gap-3 py-2.5">
               <KindIcon kind={e.kind} />
               <span className="min-w-0 flex-1 truncate text-[14px] font-bold">{e.name}</span>
-              <span className="text-[12.5px] text-[#221a14]/50">S/ {e.unit_price.toFixed(2)}</span>
+              <span className="text-[12.5px] text-[#221a14]/50">Bs. {e.unit_price.toFixed(2)}</span>
               <div className="flex items-center gap-1.5">
                 <StepCircle onClick={() => bump(e.product_id, -1)}>–</StepCircle>
                 <span className="w-6 text-center font-black">{e.qty}</span>
                 <StepCircle onClick={() => bump(e.product_id, +1)}>+</StepCircle>
               </div>
-              <span className="w-20 text-right text-[14px] font-bold">S/ {(e.unit_price * e.qty).toFixed(2)}</span>
+              <span className="w-20 text-right text-[14px] font-bold">Bs. {(e.unit_price * e.qty).toFixed(2)}</span>
             </li>
           ))}
           {edits.length === 0 && <li className="py-3 text-[13px] text-[#221a14]/50">Sin líneas. Agrega de abajo.</li>}
@@ -529,7 +529,7 @@ function ModificarModal({ o, menu, onClose, onDone }: { o: Order; menu: MenuCat[
 
         <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#122e26] px-4 py-3 text-white">
           <span className="text-[13px] font-semibold text-white/75">Nuevo total</span>
-          <span className="font-display text-2xl font-black text-[#e7a93c]">S/ {total.toFixed(2)}</span>
+          <span className="font-display text-2xl font-black text-[#e7a93c]">Bs. {total.toFixed(2)}</span>
         </div>
         <textarea className="campo mt-3 min-h-20" placeholder="Motivo de la modificación — ej. “el cliente quitar tras registrado”" value={reason} onChange={(e) => setReason(e.target.value)} />
         {err && <p className="mt-2 rounded-xl bg-[#7c2430]/10 px-4 py-2.5 text-[12.5px] font-semibold text-[#7c2430]">{err}</p>}
@@ -597,7 +597,7 @@ function CobrarModal({ o, onClose, onDone }: { o: Order; onClose: () => void; on
       <div className="grid gap-5 px-6 py-5">
         <div className="flex items-center justify-between rounded-2xl bg-[#f7f1e6] px-4 py-3">
           <span className="text-[13px] font-semibold text-[#221a14]/60">Total a cobrar</span>
-          <span className="font-display text-3xl font-black text-[#47141c]">S/ {o.total.toFixed(2)}</span>
+          <span className="font-display text-3xl font-black text-[#47141c]">Bs. {o.total.toFixed(2)}</span>
         </div>
 
         <div>
@@ -626,7 +626,7 @@ function CobrarModal({ o, onClose, onDone }: { o: Order; onClose: () => void; on
                   onClick={() => setRecibido(String(i === 0 ? o.total : Number(recib) + v))}
                   className="rounded-full border border-[#221a14]/15 bg-white px-3.5 py-1.5 text-[12.5px] font-bold hover:bg-[#e7a93c]/30"
                 >
-                  {i === 0 ? "Exacto" : `+ S/ ${v}`}
+                  {i === 0 ? "Exacto" : `+ Bs. ${v}`}
                 </button>
               ))}
               {recib > 0 && <button onClick={() => setRecibido("")} className="rounded-full border border-[#7c2430]/20 px-3 py-1.5 text-[12px] font-bold text-[#7c2430] hover:bg-[#7c2430]/10">limpiar</button>}
@@ -641,17 +641,17 @@ function CobrarModal({ o, onClose, onDone }: { o: Order; onClose: () => void; on
             <div className="mt-2.5 grid grid-cols-2 gap-3">
               <div className={`rounded-2xl px-4 py-3 ${faltan ? "bg-[#7c2430]/10" : "bg-[#f7f1e6]"}`}>
                 <p className="text-[10.5px] font-bold uppercase text-[#221a14]/40">{faltan ? "Falta" : "Recibido"}</p>
-                <p className={`font-display text-xl font-black ${faltan ? "text-[#7c2430]" : ""}`}>S/ {(faltan ? o.total - recib : recib).toFixed(2)}</p>
+                <p className={`font-display text-xl font-black ${faltan ? "text-[#7c2430]" : ""}`}>Bs. {(faltan ? o.total - recib : recib).toFixed(2)}</p>
               </div>
               <div className="rounded-2xl bg-[#1e4d3f]/10 px-4 py-3">
                 <p className="text-[10.5px] font-bold uppercase text-[#221a14]/40">Cambio</p>
-                <p className="font-display text-xl font-black text-[#1e4d3f]">S/ {cambio.toFixed(2)}</p>
+                <p className="font-display text-xl font-black text-[#1e4d3f]">Bs. {cambio.toFixed(2)}</p>
               </div>
             </div>
           </div>
         ) : (
           <div className="rounded-2xl bg-[#1e4d3f]/10 px-4 py-3 text-[12.5px] text-[#1e4d3f]">
-            El cliente paga desde su app con QR. Se registra el importe exacto: <b>S/ {o.total.toFixed(2)}</b>.
+            El cliente paga desde su app con QR. Se registra el importe exacto: <b>Bs. {o.total.toFixed(2)}</b>.
           </div>
         )}
 
@@ -688,8 +688,8 @@ function PayTickets({ done, onClose }: { done: PayDone | null; onClose: () => vo
       <div className="px-6 py-5">
         <div className="mb-4 flex items-center gap-2.5 rounded-2xl bg-[#1e4d3f]/10 px-4 py-3 text-[#1e4d3f]">
           <CheckCircle2 size={18} />
-          <b className="text-[14px]">Pago registrado — S/ {done.order.total.toFixed(2)}</b>
-          <span className="ml-auto text-[12px]">Efectivo: S/ {done.received.toFixed(2)} · Cambio: S/ {done.change.toFixed(2)}</span>
+          <b className="text-[14px]">Pago registrado — Bs. {done.order.total.toFixed(2)}</b>
+          <span className="ml-auto text-[12px]">Efectivo: Bs. {done.received.toFixed(2)} · Cambio: Bs. {done.change.toFixed(2)}</span>
         </div>
         <p className="mb-2 text-[11.5px] font-bold uppercase tracking-wide text-[#221a14]/45">Vista previa de los 2 tickets</p>
         <div className="flex flex-wrap items-start gap-4">
@@ -778,9 +778,9 @@ function Reports() {
         {rep && (
           <>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              <Stat k="Ventas del día" v={`S/ ${rep.resumen.total.toFixed(2)}`} />
-              <Stat k="En efectivo" v={`S/ ${rep.resumen.efectivo.toFixed(2)}`} />
-              <Stat k="Con QR" v={`S/ ${rep.resumen.qr.toFixed(2)}`} />
+              <Stat k="Ventas del día" v={`Bs. ${rep.resumen.total.toFixed(2)}`} />
+              <Stat k="En efectivo" v={`Bs. ${rep.resumen.efectivo.toFixed(2)}`} />
+              <Stat k="Con QR" v={`Bs. ${rep.resumen.qr.toFixed(2)}`} />
             </div>
             <p className="mt-2 text-[12px] text-white/50">
               {rep.resumen.n_pagados} pagados de {rep.resumen.n_orders} pedidos del {rep.date}.
@@ -802,7 +802,7 @@ function Reports() {
                       <td><span className="etiq bg-white/10">{o.status}</span></td>
                       <td>{o.payment_method || "—"}</td>
                       <td>{o.order_type || "—"}</td>
-                      <td className="text-right font-bold">S/ {o.total.toFixed(2)}</td>
+                      <td className="text-right font-bold">Bs. {o.total.toFixed(2)}</td>
                       <td className="pr-4 text-right">{o.cancels_in != null ? `${o.cancels_in} min` : "—"}</td>
                     </tr>
                   ))}

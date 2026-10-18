@@ -43,7 +43,7 @@ Stack: **Next.js 14 (App Router, TypeScript) + PostgreSQL + Tailwind + JWT (cook
 - **Cajeros**: crear cuenta con nombres y apellidos + contraseña; activar/desactivar.
 - **Pedidos**: puede **anular** cualquier pedido (incluidos pagados por reincidencia) con justificación;
   el stock se devuelve al anular.
-- **Dashboard**: ventas de hoy (S/ y cantidad), pedidos pendientes, stock crítico, top ventas,
+- **Dashboard**: ventas de hoy (Bs. y cantidad), pedidos pendientes, stock crítico, top ventas,
   y gráfica simple por método de pago.
 - **Reportes**: platos más vendidos, bebidas más vendidas, productos por agotarse, ingresos de stock
   y modificaciones/anulaciones con responsable y motivo.
