@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Mesa Fonda · Administración — Dashboard</title>
+<style>
+  :root{--guinda:#7c2430;--bosque:#1e4d3f;--bosque2:#122e26;--mostaza:#e7a93c}
+  *{box-sizing:border-box;margin:0}
+  body{font-family:system-ui,sans-serif;background:var(--bosque2);color:#fff;min-height:100vh;display:flex}
+  aside{width:232px;border-right:1px solid rgba(255,255,255,.1);padding:20px 14px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+  .mf{display:flex;gap:10px;align-items:center;margin-bottom:18px}
+  .mf .b{width:40px;height:40px;border-radius:12px;background:var(--mostaza);color:var(--bosque2);display:grid;place-items:center;font-family:Georgia,serif;font-weight:900;font-size:17px}
+  .mf b{font-family:Georgia,serif;font-size:17px;display:block}
+  .mf small{color:rgba(255,255,255,.5);font-size:11.5px}
+  .tab{display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:999px;background:transparent;border:0;color:rgba(255,255,255,.6);font-weight:700;font-size:13.5px;cursor:pointer;text-align:left}
+  .tab.on{background:#fff;color:var(--bosque2)}
+  .tab.new{color:#7fd6a8}
+  main{flex:1;padding:26px 30px;overflow:hidden}
+  h1{font-family:Georgia,serif;font-size:30px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+  .c{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px}
+  .c small{font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.45)}
+  .c .v{font-family:Georgia,serif;font-size:30px;font-weight:900;color:var(--mostaza);margin-top:6px}
+  .c .s{font-size:11.5px;color:rgba(255,255,255,.45);margin-top:2px}
+  .c.warn .v{color:#e59f9f}
+  .cols{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:20px}
+  .panel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:20px}
+  .panel h2{font-family:Georgia,serif;font-size:19px;font-weight:700}
+  .chart{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:16px}
+  .bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .bar-item .b2{width:100%;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--mostaza),rgba(231,169,60,.3))}
+  .bar-item small{font-size:10px;color:rgba(255,255,255,.45)}
+  .bar-item b{font-size:10.5px;color:var(--mostaza)}
+  .list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border-radius:12px;padding:9px 14px;font-size:13px}
+  .row .rk{width:24px;height:24px;border-radius:8px;background:rgba(231,169,60,.25);color:var(--mostaza);display:grid;place-items:center;font-weight:900;font-size:12px}
+  .row .nm{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .qd{font-weight:900;color:var(--mostaza)}
+  .tag{padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+  .sub{color:rgba(255,255,255,.45);font-size:11.5px;margin:4px 0 10px}
+  .stck{display:flex;align-items:center;gap:10px}
+  .stck .qty{font-family:Georgia;font-weight:900;font-size:16px;color:var(--mostaza)}
+</style>
+</head>
+<body>
+<aside>
+  <div class="mf"><span class="b">MF</span><span><b>Administración</b><small>Ana Directora</small></span></div>
+  <button class="tab on">▤ Dashboard</button>
+  <button class="tab">▦ Productos</button>
+  <button class="tab">◫ Categorías</button>
+  <button class="tab new">◔ Inventario <span class="tag">1 por agotarse</span></button>
+  <button class="tab">👤 Cajeros</button>
+  <button class="tab">✕ Pedidos</button>
+  <button class="tab">▣ Código QR</button>
+  <button class="tab" style="margin-top:auto;color:#e59f9f">⎋ Salir</button>
+</aside>
+
+<main>
+  <h1>Hoy en la caja</h1>
+  <div class="cards">
+    <div class="c"><small>Ventas de hoy</small><div class="v">S/ 203.00</div><div class="s">2 pedidos pagados</div></div>
+    <div class="c"><small>Pendientes en caja</small><div class="v">0</div><div class="s">esperando cobro</div></div>
+    <div class="c"><small>Efectivo vs QR</small><div class="v">S/ 98.40</div><div class="s">efectivo S/ 98.40 · QR S/ 104.60…</div></div>
+    <div class="c warn"><small>Sin casi stock</small><div class="v">1</div><div class="s">productos por agotarse</div></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel">
+      <h2>Ventas últimos 7 días</h2>
+      <div class="chart">
+        <div class="bar-item"><b>98</b><div class="b2" style="height:65%"></div><small>lun</small></div>
+        <div class="bar-item"><b>121</b><div class="b2" style="height:80%"></div><small>mar</small></div>
+        <div class="bar-item"><b>87</b><div class="b2" style="height:58%"></div><small>mié</small></div>
+        <div class="bar-item"><b>150</b><div class="b2" style="height:100%"></div><small>jue</small></div>
+        <div class="bar-item"><b>42</b><div class="b2" style="height:28%"></div><small>vie</small></div>
+        <div class="bar-item"><b>66</b><div class="b2" style="height:44%"></div><small>sáb</small></div>
+        <div class="bar-item"><b>203</b><div class="b2" style="height:100%;background:linear-gradient(180deg,#ffd98c,var(--mostaza))"></div><small>hoy</small></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Top ventas del mes</h2>
+      <div class="list">
+        <div class="row"><span class="rk">1</span><span class="nm">Lomo saltado</span><span class="tag">plato</span><span class="qd">4×</span></div>
+        <div class="row"><span class="rk">2</span><span class="nm">Cerveza artesanal</span><span class="tag">bebida</span><span class="qd">2×</span></div>
+        <div class="row"><span class="rk">3</span><span class="nm">Tres leches</span><span class="tag">postre</span><span class="qd">2×</span></div>
+        <div class="row"><span class="rk">4</span><span class="nm">Pollo a la brasa</span><span class="tag">plato</span><span class="qd">2×</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols" style="grid-template-columns:1fr 1fr;margin-top:16px">
+    <div class="panel">
+      <h2>Por agotarse</h2>
+      <p class="sub">Suma stock rápido desde Inventario.</p>
+      <div class="list">
+        <div class="row stck"><span class="nm">Chupe de camarones</span><span style="color:rgba(255,255,255,.45);font-size:11px">Frescas del quelite</span><span class="qty">4 u.</span></div>
+        <div class="row" style="justify-content:center;color:rgba(255,255,255,.4);font-size:12px">Todo con stock regular. 👌</div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Anulados y expirados (7 días)</h2>
+      <div class="list">
+        <div class="row"><span style="color:#e59f9f">⊘</span><span class="nm">#KP49Z · César</span><span class="tag">pagado→anulado</span><span class="qd">S/ 98.40</span></div>
+        <div class="row" style="justify-content:center;color:rgba(255,255,255,.4);font-size:12px">Sin anulaciones. ✔</div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

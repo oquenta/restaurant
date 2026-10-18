@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Mesa Fonda · Cajero — cobro con cambio</title>
+<style>
+  :root{--guinda:#7c2430;--bosque:#1e4d3f;--bosque2:#122e26;--mostaza:#e7a93c;--tinta:#221a14;--crema:#fffcf6}
+  *{box-sizing:border-box;margin:0}
+  body{font-family:system-ui,sans-serif;background:var(--bosque2);color:#fff;min-height:100vh;padding:0 0 48px}
+  .bar{display:flex;align-items:center;gap:14px;padding:14px 22px}
+  .mf{width:40px;height:40px;border-radius:12px;background:var(--mostaza);color:var(--bosque2);display:grid;place-items:center;font-weight:900;font-family:Georgia,serif;font-size:17px}
+  .bar b{font-family:Georgia,serif;font-size:18px;display:block}
+  .bar small{color:rgba(255,255,255,.55);font-size:11.5px}
+  .tabs{display:flex;gap:8px;margin-left:auto}
+  .t{padding:8px 18px;border-radius:999px;font-size:13px;font-weight:700;color:rgba(255,255,255,.6);border:0;background:transparent}
+  .t.on{background:#fff;color:var(--bosque2)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  .search{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.1);border-radius:999px;padding:10px 18px;color:#fff;font-size:14px;min-width:340px}
+  .chips{display:flex;gap:8px;align-items:center}
+  .chip{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);padding:8px 15px;border-radius:999px;font-size:12.5px;font-weight:700;border:0}
+  .chip.on{background:#fff;color:var(--bosque2)}
+  .cols{display:grid;grid-template-columns:1fr 430px;gap:20px;margin-top:18px}
+  .card{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);border-radius:24px;padding:16px}
+  .card .top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .code{font-family:Georgia,serif;font-size:24px;font-weight:900;color:var(--mostaza);line-height:1}
+  .card small.h{color:rgba(255,255,255,.45);font-size:11.5px}
+  .alias{font-size:15px;font-weight:700}
+  .alias small{display:block;color:rgba(255,255,255,.55);font-weight:400;font-size:12.5px}
+  .tot{font-family:Georgia,serif;font-size:20px;font-weight:900;margin-left:auto}
+  .bdg{padding:3px 11px;border-radius:999px;font-size:11px;font-weight:700}
+  .b-encaja{background:rgba(231,169,60,.2);color:#eec27f}
+  .b-pago{background:rgba(30,77,63,.4);color:#7fd6a8}
+  .timer{background:rgba(255,255,255,.1);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+  .timer.crit{background:var(--guinda);animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.75}}
+  .acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .a{border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);background:transparent;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:700}
+  .a.dang{border-color:rgba(124,36,48,.5);background:rgba(124,36,48,.2);color:#e59f9f}
+  .a.gold{background:var(--mostaza);color:var(--bosque2);border:0}
+  .paybg{background:#fff;color:var(--tinta);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.5);padding:20px;position:sticky;top:16px}
+  .paybg h2{font-family:Georgia,serif;color:#47141c;font-size:20px;display:flex;justify-content:space-between}
+  .paybg h2 button{border:0;background:rgba(34,26,20,.05);width:30px;height:30px;border-radius:999px;cursor:pointer;font-size:15px}
+  .big{background:var(--crema);border-radius:18px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0}
+  .big .n{font-family:Georgia,serif;font-size:28px;font-weight:900;color:#47141c}
+  .pick{border:1px solid rgba(34,26,20,.15);background:#fff;border-radius:16px;padding:12px;font-weight:700;font-size:13.5px;cursor:pointer;display:flex;gap:8px;align-items:center;justify-content:center}
+  .pick.on{background:var(--guinda);color:#fff;border-color:var(--guinda)}
+  .lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:rgba(34,26,20,.45);margin:14px 0 6px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .amount{width:100%;border:1px solid rgba(34,26,20,.15);padding:10px 14px;border-radius:14px;font-family:Georgia,serif;font-size:24px;font-weight:900;text-align:right;outline:0}
+  kbd{background:linear-gradient(rgba(255,255,255,.9),#fff);border:1px solid rgba(34,26,20,.15);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .kv{border-radius:16px;padding:12px 16px;background:var(--crema)}
+  .kv small{font-size:10.5px;font-weight:800;text-transform:uppercase;color:rgba(34,26,20,.4)}
+  .kv .v{font-family:Georgia,serif;font-size:20px;font-weight:900}
+  .kv.camb{background:rgba(30,77,63,.1)}
+  .kv.falta{background:rgba(124,36,48,.08)}
+  .kv.falta .v{color:var(--guinda)}
+  .confirm{width:100%;border:0;background:var(--guinda);color:#fff;border-radius:999px;padding:14px;font-size:15px;font-weight:800;margin-top:14px;cursor:pointer}
+  .ticket{margin-top:14px;width:100%;border:1px dashed rgba(34,26,20,.3);border-radius:12px;padding:12px;font-family:'Courier New',monospace;font-size:11.5px;line-height:1.5;color:#000;background:#fff}
+  .gr{display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="mf">MF</div>
+    <div><b>Caja · Mesa Fonda</b><small>usando Carlos Cajero</small></div>
+    <div class="tabs"><button class="t on">Pedidos</button><button class="t">Reportes</button><button class="t">Salir</button></div>
+  </div>
+
+  <div class="wrap">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="search">🔍 Buscar por alias, celular o código…</span>
+      <span class="chips">
+        <button class="chip on">En caja</button><button class="chip">Pagados</button><button class="chip">Anulados</button><button class="chip">Todos</button>
+      </span>
+    </div>
+
+    <div class="cols">
+      <div>
+        <div class="card">
+          <div class="top">
+            <div><span class="code">#GQ73X</span><br/><small class="h">14:32</small></div>
+            <div class="alias">Mesa 4 – Cristian<small>987654321</small></div>
+            <div><small style="color:rgba(255,255,255,.65);font-size:12.5px">3 productos · 4 und</small></div>
+            <span class="tot">S/ 84.00</span>
+            <span class="bdg b-encaja">En caja</span>
+            <span class="timer" style="background:rgba(255,255,255,.1)">⏱ 27:12</span>
+          </div>
+          <div class="acts">
+            <button class="a">✎ Modificar</button>
+            <button class="a dang">🗑 Eliminar</button>
+            <button class="a gold">💲 Cobrar S/ 84.00</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="top">
+            <div><span class="code">#H2MK8</span><br/><small class="h">14:18</small></div>
+            <div class="alias">La Carmen<small>945338112</small></div>
+            <div><small style="color:rgba(255,255,255,.65);font-size:12.5px">5 productos · 8 und</small></div>
+            <span class="tot">S/ 121.50</span>
+            <span class="bdg b-encaja">En caja</span>
+            <span class="timer crit">⏱ 04:08</span>
+          </div>
+          <div class="acts">
+            <span style="font-size:12px;color:#e59f9f;background:rgba(124,36,48,.15);border-radius:10px;padding:6px 12px">⚠ Está por expirar: se anula solo al llegar a 00:00</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;opacity:.85">
+          <div class="top">
+            <div><span class="code">#KP49Z</span><br/><small class="h">13:05</small></div>
+            <div class="alias">César Ramírez<small>912445560</small></div>
+            <div><small style="color:rgba(255,255,255,.65);font-size:12.5px">4 productos · 6 und</small></div>
+            <span class="tot">S/ 98.40</span>
+            <span class="bdg b-pago">Pagado · 13:21 · efectivo</span>
+          </div>
+          <div class="acts"><span style="color:rgba(255,255,255,.4);font-size:12px">Cambio entregado: S/ 1.60</span></div>
+        </div>
+      </div>
+
+      <div class="paybg">
+        <h2>Cobrar #GQ73X <button>×</button></h2>
+        <div class="big"><span style="font-size:13px;color:rgba(34,26,20,.6);font-weight:600">Total a cobrar</span><span class="n">S/ 84.00</span></div>
+        <div class="lbl">Tipo de venta</div>
+        <div class="grid2">
+          <button class="pick on">🏠 Service en el local</button><button class="pick">🛍 Para llevar</button>
+        </div>
+        <div class="lbl">Método de pago</div>
+        <div class="grid2">
+          <button class="pick on">💵 Efectivo</button><button class="pick">▣ QR (Yape/Plin)</button>
+        </div>
+        <div class="lbl">Monto entregado</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+          <kbd>Exacto</kbd><kbd>+ 50</kbd><kbd>+ 100</kbd><kbd>+ 200</kbd>
+        </div>
+        <input class="amount" value="150.00"/>
+        <div class="grid2" style="margin-top:10px">
+          <div class="kv"><small>Recibido</small><div class="v">S/ 150.00</div></div>
+          <div class="kv camb"><small>Cambio</small><div class="v">S/ 66.00</div></div>
+        </div>
+        <div class="lbl">Vista previa de los 2 tickets</div>
+        <div style="display:flex;gap:10px">
+          <div class="ticket">
+            <div style="text-align:center;font-weight:800">MESA FONDA</div><div style="text-align:center">COCINA · Platos y postres</div>
+            <hr style="border:0;border-top:1px dashed #000;margin:5px 0"/>
+            <div>Pedido : #GQ73X<br/>Alias  : Mesa 4 – Cristian<br/>Hora   : 14:18 · LOCAL</div>
+            <hr style="border:0;border-top:1px dashed #000;margin:5px 0"/>
+            <div>&gt; 2× Lomo saltado<br/>&gt; 1× Cerveza artesanal<br/>&gt; 1× Tres leches</div>
+          </div>
+          <div class="ticket">
+            <div style="text-align:center;font-weight:800">MESA FONDA</div><div style="text-align:center">BARRA · Bebidas</div>
+            <hr style="border:0;border-top:1px dashed #000;margin:5px 0"/>
+            <div>Pedido : #GQ73X<br/>Alias  : Mesa 4 – Cristian<br/>Hora   : 14:18 · LOCAL</div>
+            <hr style="border:0;border-top:1px dashed #000;margin:5px 0"/>
+            <div>&gt; 1× Chicha morada jarra</div>
+          </div>
+        </div>
+        <button class="confirm">🖨 Confirmar pago e imprimir tickets</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
