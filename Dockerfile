@@ -1,6 +1,6 @@
 # Dockerfile multi-stage para La Paila (Next.js 15 Standalone + Prisma + PostgreSQL)
 FROM node:20-alpine AS base
-RUN apk add --no-cache libc6-compat openssl curl
+RUN apk add --no-cache libc6-compat openssl curl postgresql-client
 
 # --- Dependencias ---
 FROM base AS deps
@@ -34,9 +34,10 @@ RUN adduser --system --uid 1001 nextjs
 # Directorio de subidas persistente
 RUN mkdir -p /app/public/uploads && chown -R nextjs:nodejs /app/public
 
-# Copiar artefactos de compilación y librerías necesarias para Prisma db push
+# Copiar artefactos de compilación, bd y librerías necesarias
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/bd ./bd
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
