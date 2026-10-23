@@ -1,7 +1,5 @@
-import CajeroApp from "@/components/CajeroApp";
+import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-export default function Page() {
-  return <CajeroApp />;
+export default function AcortadorCajero() {
+  redirect("/panel");
 }

@@ -1,1 +1,41 @@
-{"name":"mesa-fonda-pos","version":"1.0.0","private":true,"scripts":{"dev":"next dev","build":"next build","start":"next start","setup-db":"node scripts/setup-db.mjs"},"dependencies":{"bcryptjs":"^2.4.3","jose":"^5.9.6","lucide-react":"^1.59.0","next":"^14.2.15","pg":"^8.13.0","pg-mem":"^3.0.4","qrcode":"^1.5.4","react":"^18.3.1","react-dom":"^18.3.1","tailwindcss":"^3.4.14"},"devDependencies":{"@types/bcryptjs":"^2.4.6","@types/node":"^20.16.11","@types/pg":"^8.11.10","@types/qrcode":"^1.5.6","@types/react":"^18.3.11","@types/react-dom":"^18.3.1","autoprefixer":"^10.4.20","postcss":"^8.4.47","typescript":"^5.6.3"}}
+{
+  "name": "resto-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "setup": "prisma db push && tsx prisma/seed.ts",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.5.28",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "@prisma/client": "^6.4.1",
+    "jose": "^6.1.1",
+    "bcryptjs": "^3.0.2",
+    "zod": "^4.6.7",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/qrcode": "^1.5.5",
+    "prisma": "^6.4.1",
+    "tsx": "^4.20.5",
+    "tailwindcss": "^4.1.17",
+    "@tailwindcss/postcss": "^4.1.17"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

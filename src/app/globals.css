@@ -1,98 +1,318 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@font-face {
-  font-family: "Fraunces";
-  src: url("/fonts/fraunces-var.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Atkinson Hyperlegible";
-  src: url("/fonts/atkinson-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Atkinson Hyperlegible";
-  src: url("/fonts/atkinson-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
+@import "tailwindcss";
 
 :root {
-  --guinda: #7c2430;
-  --guinda-dark: #47141c;
-  --bosque: #1e4d3f;
-  --bosque-dark: #122e26;
-  --mostaza: #e7a93c;
-  --papel: #f7f1e6;
-  --crema: #fffcf6;
-  --tinta: #221a14;
+  /* Tipografía Geométrica Estilo Gilroy (Urbanist) */
+  --font-gilroy: var(--font-gilroy), "Urbanist", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  /* Fondo Carbón y Madera Noble Gastronómica */
+  --bg: #0d0906;
+  --panel: #160f0a;
+  --panel2: #1f150e;
+  --panel3: #2a1d13;
+  --line: #3b281b;
+  --line-glow: rgba(255, 94, 40, 0.22);
+  --line-subtle: rgba(255, 205, 160, 0.1);
+
+  /* Tintas Marfil, Almendra y Bronce Cálido */
+  --ink: #fdfaf6;
+  --ink-soft: #f3ece3;
+  --muted: #a69281;
+  --muted-light: #c8b7a6;
+
+  /* Gama Fuego, Brasa y Apetito */
+  --brasa: #ff5e28;
+  --brasa-fuego: #e03d08;
+  --brasa-glow: rgba(255, 94, 40, 0.38);
+  --amanecer: #fbbf24;
+  --oro: #f59e0b;
+  --oro-glow: rgba(245, 158, 11, 0.28);
+  --vino: #7f1d1d;
+  --terracota: #c2410c;
+
+  /* Estados Culinarios y Alertas */
+  --ok: #10b981;
+  --ok-bg: rgba(16, 185, 129, 0.14);
+  --peligro: #f43f5e;
+  --peligro-bg: rgba(244, 63, 94, 0.14);
+  --cielo: #38bdf8;
+  --cielo-bg: rgba(56, 189, 248, 0.14);
 }
 
-html { -webkit-tap-highlight-color: transparent; }
+html {
+  color-scheme: dark;
+}
+
 body {
-  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
-  color: var(--tinta);
-}
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Textura de papel con puntitos */
-.papel-dot {
-  background-color: var(--papel);
-  background-image: radial-gradient(rgba(124, 36, 48, 0.07) 1px, transparent 1px);
-  background-size: 18px 18px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-gilroy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ————— Tipografía Geométrica Estilo Gilroy ————— */
+.font-sans {
+  font-family: var(--font-gilroy);
+}
+
+.brand {
+  font-family: var(--font-gilroy);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.serif {
+  font-family: var(--font-gilroy);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ————— Fondo Brasa Vivo ————— */
+.fondo-brasa {
+  background:
+    radial-gradient(1200px 600px at 85% -15%, rgba(255, 94, 40, 0.16), transparent 60%),
+    radial-gradient(900px 500px at 10% 115%, rgba(251, 191, 36, 0.1), transparent 60%),
+    radial-gradient(800px 400px at 50% 50%, rgba(194, 65, 12, 0.05), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* ————— Componentes y Tarjetas Gastronómicas ————— */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 150, 80, 0.28);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.6), 0 0 15px -3px rgba(255, 94, 40, 0.15);
+}
+
+.card-2 {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.card-oro {
+  background: linear-gradient(145deg, #1f160e, #18100a);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 0 20px -4px rgba(245, 158, 11, 0.15);
+}
+
+/* ————— Botones ————— */
 .btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition
-         disabled:opacity-40 disabled:cursor-not-allowed select-none;
-}
-.btn-primario { @apply bg-[#7c2430] text-white hover:bg-[#611c26] active:scale-[.98]; }
-.btn-bosque { @apply bg-[#1e4d3f] text-white hover:bg-[#122e26] active:scale-[.98]; }
-.btn-mostaza { @apply bg-[#e7a93c] text-[#221a14] hover:bg-[#d69a2e] active:scale-[.98]; }
-.btn-fantasma { @apply bg-transparent border border-[#7c2430]/25 text-[#221a14] hover:bg-[#7c2430]/5; }
-.btn-oscuro-fantasma { @apply border border-white/25 text-white/90 hover:bg-white/10; }
-
-.campo {
-  @apply w-full rounded-xl border border-[#221a14]/15 bg-white px-3.5 py-2.5 text-[15px]
-         outline-none transition placeholder:text-[#221a14]/35
-         focus:border-[#7c2430] focus:ring-4 focus:ring-[#7c2430]/10;
-}
-
-.tarjeta { @apply rounded-3xl bg-white shadow-[0_1px_0_rgba(34,26,20,.06),0_18px_40px_-24px_rgba(34,26,20,.28)]; }
-
-.etiq {
-  @apply rounded-full px-2.5 py-0.5 text-[11px] font-bold tracking-wide;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-gilroy);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border-radius: 0.85rem;
+  padding: 0.7rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+  white-space: nowrap;
 }
 
-/* Tabs/subsecciones del staff */
-.tab-btn {
-  @apply rounded-full px-4 py-2 text-sm font-semibold text-white/60 transition hover:text-white
-         data-[on=true]:bg-white data-[on=true]:text-[#122e26];
+.btn:active {
+  transform: scale(0.98);
 }
 
-/* ======== TICKETS (80 mm) ======== */
-.tickets-root { display: none; }
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-brasa {
+  background: linear-gradient(135deg, var(--brasa) 0%, var(--brasa-fuego) 100%);
+  color: #fff9f5;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px -2px var(--brasa-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.btn-brasa:hover:not(:disabled) {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 24px -2px rgba(255, 94, 40, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-suave {
+  background: var(--panel2);
+  border-color: var(--line);
+  color: var(--ink-soft);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-suave:hover:not(:disabled) {
+  border-color: rgba(255, 150, 80, 0.3);
+  background: var(--panel3);
+  color: var(--ink);
+}
+
+.btn-oro {
+  background: linear-gradient(135deg, var(--amanecer) 0%, var(--oro) 100%);
+  color: #271404;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px -2px var(--oro-glow);
+}
+
+.btn-oro:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.btn-ok {
+  background: var(--ok);
+  color: #032316;
+  font-weight: 700;
+}
+
+.btn-peligro {
+  background: var(--peligro);
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-xs {
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.65rem;
+  font-size: 0.8rem;
+}
+
+/* ————— Chips y Badges ————— */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--muted-light);
+  letter-spacing: 0.01em;
+}
+
+.chip-registrado {
+  color: var(--amanecer);
+  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.chip-listo {
+  color: var(--cielo);
+  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.chip-pagado {
+  color: var(--ok);
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.chip-anulado {
+  color: var(--peligro);
+  border-color: rgba(244, 63, 94, 0.3);
+  background: rgba(244, 63, 94, 0.1);
+}
+
+/* ————— Inputs ————— */
+.input {
+  width: 100%;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.95rem;
+  color: var(--ink);
+  font-family: var(--font-gilroy);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--brasa);
+  background: var(--panel3);
+  box-shadow: 0 0 0 3px rgba(255, 94, 40, 0.2);
+}
+
+.label {
+  font-size: 0.82rem;
+  color: var(--muted-light);
+  margin-bottom: 0.35rem;
+  display: block;
+  font-weight: 500;
+}
+
+/* ————— Íconos y Baldosas de Platos ————— */
+.tile {
+  display: grid;
+  place-items: center;
+  border-radius: 1.15rem;
+  font-size: 2.6rem;
+  width: 84px;
+  height: 84px;
+  flex: none;
+  background: linear-gradient(145deg, #2a1c12, #18100a);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.barra {
+  height: 10px;
+  border-radius: 999px;
+  background: #2b1c12;
+  overflow: hidden;
+}
+
+.barra > i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brasa), var(--amanecer));
+}
+
+.flex-row-scroll {
+  scrollbar-width: thin;
+}
+
+.flex-row-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.flex-row-scroll::-webkit-scrollbar-thumb {
+  background: #4a3626;
+  border-radius: 99px;
+}
+
 @media print {
-  body * { visibility: hidden; }
-  .tickets-root, .tickets-root * { visibility: visible; }
-  .tickets-root {
-    display: block;
-    position: absolute;
-    inset: 0;
-    width: 80mm;
-  }
-  .ticket {
-    page-break-after: always;
-    width: 80mm;
-    font-family: "Courier New", ui-monospace, monospace;
-    font-size: 12px;
-    color: #000;
-  }
-  .ticket:last-child { page-break-after: auto; }
+  .no-print { display: none !important; }
+  body { background: #fff !important; color: #000 !important; font-family: sans-serif !important; }
+  .ticket-print { box-shadow: none !important; border-color: #999 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--amanecer);
+  outline-offset: 2px;
 }

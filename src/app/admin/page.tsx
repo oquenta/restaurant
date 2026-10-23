@@ -1,7 +1,5 @@
-import AdminApp from "@/components/AdminApp";
+import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-export default function Page() {
-  return <AdminApp />;
+export default function AcortadorAdmin() {
+  redirect("/gerencia");
 }
