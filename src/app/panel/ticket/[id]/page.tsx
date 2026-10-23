@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, redirect, useEffect } from "next/navigation";
 import { db } from "@/lib/db";
 import { leerSesion } from "@/lib/sesion";
 import { Bs } from "@/lib/formato";
@@ -34,6 +34,10 @@ export default async function PaginaTicket({ params }: { params: Promise<{ id: s
       <p>{p.servicio === "EN_LOCAL" ? "** SERVIR EN LOCAL **" : "** PARA LLEVAR **"}</p>
     </>
   );
+
+  useEffect(() => {
+    window.print();
+  }, []);
 
   return (
     <main className="mx-auto max-w-[860px] bg-white text-black min-h-dvh p-6" style={{ fontFamily: '"Courier New", monospace' }}>
