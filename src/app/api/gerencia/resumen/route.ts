@@ -45,6 +45,13 @@ export async function GET() {
         .sort((a, b) => b.uds - a.uds)
         .slice(0, 6);
 
+    // Menos vendidos (6 menos vendidos por tipo)
+    const menosVendidos = (t: string) =>
+      [...conteo.values()]
+        .filter((e) => e.tipo === t)
+        .sort((a, b) => a.uds - b.uds)
+        .slice(0, 6);
+
     const serie = [] as { dia: string; bs: number; pedidos: number }[];
     for (let d = 6; d >= 0; d--) {
       const ini = new Date(hoy.getTime() - d * 86400000);
@@ -85,6 +92,11 @@ export async function GET() {
       })),
       cajeros,
       ultimoLog: ultimoLog && { accion: ultimoLog.accion, creadoEn: ultimoLog.creadoEn, usuario: ultimoLog.usuarioNombre },
+      menosVendidos: {
+        platos: menosVendidos("PLATOS"),
+        bebidas: menosVendidos("BEBIDAS"),
+        postres: menosVendidos("POSTRES"),
+      },
     });
   } catch (e) {
     return jsonError(e);

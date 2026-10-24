@@ -39,14 +39,26 @@ enum MetodoPago {
 model Usuario {
   id        Int         @id @default(autoincrement())
   usuario   String      @unique
-  nombre    String
-  apellidos String
+  nombre    String      // nombre del restaurante ("La Paila" por defecto)
+  apellidos String      // apellidos usados solo como "razón social"
   password  String
   rol       Rol         @default(CAJERO)
   activo    Boolean     @default(true)
   creadoEn  DateTime    @default(now())
   pedidos   Pedido[]
   logs      Auditoria[]
+  config    Configuracion // datos de configuración de la empresa (logo, teléfono, dirección)
+}
+
+model Configuracion {
+  id        Int        @id @default(autoincrement())
+  logo      String     // URL o ruta de la imagen del logo
+  nombre    String     // nombre del restaurante
+  ubicacion String     // dirección o ubicación
+  telefono  String     // número de teléfono
+  usuarioId Int        @unique
+  usuario   Usuario    @relation(fields: [usuarioId], references: [id])
+  creadoEn  DateTime   @default(now())
 }
 
 model Categoria {

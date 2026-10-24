@@ -14,6 +14,11 @@ type Resumen = {
   productos: { id: number; nombre: string; categoria: string; stock: number; stockMin: number; precio: string; imagen: string; disponible: boolean; creadoEn: string }[];
   cajeros: { id: number; nombre: string; apellidos: string; activo: boolean; creadoEn: string; usuario: string }[];
   ultimoLog: { accion: string; creadoEn: string; usuario: string } | null;
+  menosVendidos: {
+    platos: { nombre: string; uds: number }[];
+    bebidas: { nombre: string; uds: number }[];
+    postres: { nombre: string; uds: number }[];
+  };
 };
 
 const Bs = (n: number) => `Bs ${Number(n).toLocaleString("es-BO", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -125,29 +130,68 @@ export default function Dashboard(props: { nombre: string }) {
         </section>
       </div>
 
-      {/* más vendidos */}
+      {/* más y menos vendidos */}
       <div className="grid gap-4 sm:grid-cols-3">
-        {[
-          { t: "Platos 🍛", xs: d.topPlatos },
-          { t: "Bebidas 🍹", xs: d.topBebidas },
-          { t: "Postres 🥧", xs: d.topPostres },
-        ].map((g) => (
-          <section key={g.t} className="card p-4">
-            <p className="brand mb-2">{g.t} · 7 días</p>
-            <ul className="grid gap-1.5 text-sm">
-              {g.xs.map((x, i) => (
-                <li key={x.nombre} className="flex justify-between gap-2">
-                  <span className="truncate">
+        <div className="card p-4">
+          <p className="brand mb-2">Más vendidos · 7 días</p>
+          <ul className="grid gap-1.5 text-sm">
+            {[
+              { t: "Platos 🍛", xs: d.topPlatos },
+              { t: "Bebidas 🍹", xs: d.topBebidas },
+              { t: "Postres 🥧", xs: d.topPostres },
+            ].map((g) => (
+              <li key={g.t} className="flex justify-between gap-2">
+                <span>{g.t} · {g.xs.length} items</span>
+                <span className="text-right">{g.xs.length > 0 ? Math.max(...g.xs.map(x => x.uds)) + " uds max" : "—"}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="card p-4">
+          <p className="brand mb-2">Menos vendidos · 7 días</p>
+          <ul className="grid gap-1.5 text-sm">
+            <li>{d.menosVendidos.platos.length > 0 ? (
+              <ul className="grid gap-1.5 text-sm">
+                {d.menosVendidos.platos.map((x, i) => (
+                  <li key={x.nombre} className="flex justify-between gap-2">
                     <span className="text-[var(--muted)] mr-1 tabular">{i + 1}.</span>
-                    {x.nombre}
-                  </span>
-                  <span className="tabular text-[var(--muted)] whitespace-nowrap">{x.uds} uds</span>
-                </li>
-              ))}
-              {g.xs.length === 0 && <li className="text-[var(--muted)]">— sin ventas aún</li>}
-            </ul>
-          </section>
-        ))}
+                    <span className="truncate">{x.nombre}</span>
+                    <span className="tabular text-[var(--muted)] whitespace-nowrap">{x.uds} uds</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[var(--muted)]">— sin ventas aún</p>
+            )}</li>
+            <li>{d.menosVendidos.bebidas.length > 0 ? (
+              <ul className="grid gap-1.5 text-sm">
+                {d.menosVendidos.bebidas.map((x, i) => (
+                  <li key={x.nombre} className="flex justify-between gap-2">
+                    <span className="text-[var(--muted)] mr-1 tabular">{i + 1}.</span>
+                    <span className="truncate">{x.nombre}</span>
+                    <span className="tabular text-[var(--muted)] whitespace-nowrap">{x.uds} uds</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[var(--muted)]">— sin ventas aún</p>
+            )}</li>
+            <li>{d.menosVendidos.postres.length > 0 ? (
+              <ul className="grid gap-1.5 text-sm">
+                {d.menosVendidos.postres.map((x, i) => (
+                  <li key={x.nombre} className="flex justify-between gap-2">
+                    <span className="text-[var(--muted)] mr-1 tabular">{i + 1}.</span>
+                    <span className="truncate">{x.nombre}</span>
+                    <span className="tabular text-[var(--muted)] whitespace-nowrap">{x.uds} uds</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[var(--muted)]">— sin ventas aún</p>
+            )}</li>
+          </ul>
+        </div>
       </div>
 
       {/* ingreso de productos + cajeros */}
